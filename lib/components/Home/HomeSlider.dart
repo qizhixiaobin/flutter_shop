@@ -83,6 +83,11 @@ class _HomesliderState extends State<Homeslider> {
               color: _currentIndex == index ? Colors.white : Colors.grey,
               borderRadius: BorderRadius.circular(3)
             ), 
+            child: GestureDetector(
+              onTap: () {
+                _carouselSliderController.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+              },
+            )
           );
         }),
       ),
