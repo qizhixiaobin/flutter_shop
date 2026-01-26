@@ -27,7 +27,7 @@ class _HomesliderState extends State<Homeslider> {
         );
       }),
       options: CarouselOptions(
-        height: 200,
+        height: 300,
         autoPlay: true,
         autoPlayInterval: Duration(seconds: 3),
         autoPlayAnimationDuration: Duration(milliseconds: 800),
