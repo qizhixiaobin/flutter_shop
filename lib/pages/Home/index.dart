@@ -16,11 +16,17 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
 
+  // 轮播图数据
+  List<BannerItem> _bannerList = [];
+  // 分类数据
+  List<CategoryItem> _categoryList = [];
+
   @override
   void initState() {
 
     super.initState();
     _getBannerList();
+    _getCategoryList();
   }
 
   _getBannerList() async { 
@@ -28,8 +34,12 @@ class _HomeViewState extends State<HomeView> {
     setState(() {});
   }
 
-  // 轮播图数据
-  List<BannerItem> _bannerList = [];
+  _getCategoryList() async {
+    _categoryList = await getCategoryListAPI();
+    setState(() {});
+  }
+
+
  
   // 获取滚动容器的内容
   List<Widget> _getSlivers() {
@@ -47,7 +57,7 @@ class _HomeViewState extends State<HomeView> {
 
       // 分类
       SliverToBoxAdapter(
-        child: Category(),
+        child: Category(categoryList: _categoryList),
       ),
 
       // 间隔

@@ -9,7 +9,7 @@ class GlobalConstants {
 //请求地址常量
 class ApiConstants {
   static final String BANNER_LIST = "home/banner"; // 轮播图列表
-  static final String CATEGORY_LIST = "api/category/list"; // 分类列表
+  static final String CATEGORY_LIST = "home/category/head"; // 分类列表
   static final String PRODUCT_LIST = "api/product/list"; // 商品列表
   static final String PRODUCT_DETAIL = "api/product/detail"; // 商品详情
 }
