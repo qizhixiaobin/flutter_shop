@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_shop/contants/GlobalConstants.dart';
 
 class DioRequest {
-  Dio _dio = Dio();
+  final Dio _dio = Dio();
   DioRequest() {
     _dio.options..baseUrl = GlobalConstants.API_BASE_URL
     ..connectTimeout = Duration(milliseconds: GlobalConstants.TIMEOUT_DURATION) // 5 seconds

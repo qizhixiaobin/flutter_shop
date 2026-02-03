@@ -19,7 +19,9 @@ class _HomeViewState extends State<HomeView> {
   // 轮播图数据
   List<BannerItem> _bannerList = [];
   // 分类数据
-  List<CategoryItem> _categoryList = [];
+  List<CategoryItem> _categoryList = []; 
+  // 推荐数据
+  RecommendResult _recommendResult = RecommendResult(id: "", title: "", subTypes: []);
 
   @override
   void initState() {
@@ -27,6 +29,7 @@ class _HomeViewState extends State<HomeView> {
     super.initState();
     _getBannerList();
     _getCategoryList();
+    _getRecommendResult();
   }
 
   _getBannerList() async { 
@@ -39,7 +42,10 @@ class _HomeViewState extends State<HomeView> {
     setState(() {});
   }
 
-
+  _getRecommendResult() async {
+    _recommendResult = await getRecommendListAPI();
+    setState(() {});
+  }
  
   // 获取滚动容器的内容
   List<Widget> _getSlivers() {
@@ -67,7 +73,7 @@ class _HomeViewState extends State<HomeView> {
 
       // 推荐组件
       SliverToBoxAdapter(
-        child: Suggestion(),
+        child: Suggestion(recommendResult: _recommendResult),
       ),
 
       // 间隔
