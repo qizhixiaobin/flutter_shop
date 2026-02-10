@@ -19,3 +19,32 @@ Future<RecommendResult> getRecommendListAPI() async {
     await dioRequest.get(ApiConstants.PRODUCT_LIST)
   );
 }
+
+// 热榜推荐
+Future<RecommendResult> getInVogueListAPI() async {
+  // 返回请求
+  return RecommendResult.fromJson(
+    await dioRequest.get(ApiConstants.IN_VOGUE_LIST),
+  );
+}
+
+// 一站式推荐
+Future<RecommendResult> getOneStopListAPI() async {
+  // 返回请求
+  return RecommendResult.fromJson(
+    await dioRequest.get(ApiConstants.ONE_STOP_LIST),
+  );
+}
+
+// 推荐列表
+Future<List<GoodDetailItem>> getRecommendScrollListAPI(
+  Map<String, dynamic> params,
+) async {
+  // 返回请求
+  return ((await dioRequest.get(ApiConstants.RECOMMEND_LIST, queryParameters: params))
+          as List)
+      .map((item) {
+        return GoodDetailItem.formJSON(item as Map<String, dynamic>);
+      })
+      .toList();
+}

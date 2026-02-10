@@ -12,4 +12,7 @@ class ApiConstants {
   static final String CATEGORY_LIST = "home/category/head"; // 分类列表
   static final String PRODUCT_LIST = "hot/preference"; // 商品列表
   static final String PRODUCT_DETAIL = "api/product/detail"; // 商品详情
+  static const String IN_VOGUE_LIST = "/hot/inVogue"; // 热榜推荐地址
+  static const String ONE_STOP_LIST = "/hot/oneStop"; // 一站式推荐地址
+  static const String RECOMMEND_LIST = "/home/recommend"; // 推荐列表
 }

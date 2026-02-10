@@ -10,6 +10,7 @@ Widget getRootWidget() {
     //命名路由
     initialRoute: "/",
     routes: getRootRoutes(),
+    debugShowCheckedModeBanner: false,
   );
 }
 
