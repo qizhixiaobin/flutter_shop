@@ -185,3 +185,40 @@ class GoodDetailItem extends GoodsItem {
     );
   }
 }
+
+class GoodsDetailItems {
+  final int counts;
+  final int pageSize;
+  final int pages;
+  final int page;
+  final List<GoodDetailItem> items;
+
+  GoodsDetailItems({required this.counts, required this.pageSize, required this.pages, required this.page, required this.items});
+
+  factory GoodsDetailItems.fromJson(Map<String, dynamic> json) {
+    int parseInt(dynamic v) {
+      if (v is int) return v;
+      if (v is String) return int.tryParse(v) ?? 0;
+      return 0;
+    }
+
+    var list = json['items'] as List?;
+    List<GoodDetailItem> items = list?.map((e) => GoodDetailItem.formJSON(e as Map<String, dynamic>)).toList() ?? [];
+
+    return GoodsDetailItems(
+      counts: parseInt(json['counts']),
+      pageSize: parseInt(json['pageSize']),
+      pages: parseInt(json['pages']),
+      page: parseInt(json['page']),
+      items: items,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'counts': counts,
+        'pageSize': pageSize,
+        'pages': pages,
+        'page': page,
+        'items': items.map((e) => e.toJson()).toList(),
+      };
+}
