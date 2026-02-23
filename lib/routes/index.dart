@@ -18,6 +18,6 @@ Widget getRootWidget() {
 Map<String, Widget Function(BuildContext)> getRootRoutes() {
   return {
     '/': (context) => const MainPage(),
-    '/login': (context) => const LoginPage(),
+    '/login': (context) => LoginPage(),
   };
 }
