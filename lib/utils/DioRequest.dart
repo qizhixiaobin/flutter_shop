@@ -33,35 +33,34 @@ class DioRequest {
       },
       onError: (DioException e, handler) {
         // 错误处理
-        handler.reject(DioException(requestOptions: e.requestOptions));
+        handler.reject(DioException(requestOptions: e.requestOptions, message: e.response?.data['message'] ?? '请求发生错误'));
       },
     ));
   }
 
   Future<dynamic> _handleResponse(Future<Response<dynamic>> task) async {
-    Response<dynamic> response = await task;
-    final data = response.data;
-    if (data['code'] == GlobalConstants.SUCCESS_CODE) {
-      return data['result'];
-    } else {
-      throw Exception('请求失败，错误码：${data['code']}，错误信息：${data['message']}');
+    try {
+      Response<dynamic> response = await task;
+      final data = response.data;
+      if (data['code'] == GlobalConstants.SUCCESS_CODE) {
+        return data['result'];
+      } else {
+        throw DioException(requestOptions:  response.requestOptions, 
+                           message: data['message'] ?? '请求失败');
+      }
+    } catch (e) {
+      rethrow;
     }
   }
 
   Future<dynamic> get(String path, {Map<String, dynamic>? queryParameters}){
-    try {
-      return _handleResponse(_dio.get(path, queryParameters: queryParameters));
-    } on DioException catch (e) {
-      throw Exception('GET请求失败: ${e.message}');
-    }
+
+    return _handleResponse(_dio.get(path, queryParameters: queryParameters));
   }
 
   Future<dynamic> post(String path, {Map<String, dynamic>? data}) async {
-    try {
-      return _handleResponse(_dio.post(path, data: data));
-    } on DioException catch (e) {
-      throw Exception('POST请求失败: ${e.message}');
-    }
+  
+    return _handleResponse(_dio.post(path, data: data));
   }
 }
 

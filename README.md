@@ -16,4 +16,8 @@ A new Flutter project.
   - utils               #存放工具类
   - main.dart           #入口
 
+## 登录账号
+account： 13200000001~13200000010
+password：123456
+
 

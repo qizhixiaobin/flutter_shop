@@ -1,5 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/api/user.dart';
+import 'package:flutter_shop/stores/UserController.dart';
 import 'package:flutter_shop/utils/ToastUtils.dart';
+import 'package:get/get.dart';
+import 'package:get/route_manager.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -9,6 +14,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final Usercontroller _usercontroller = Get.find();
   TextEditingController _phoneController = TextEditingController(); // 账号控制器
   TextEditingController _codeController = TextEditingController(); // 密码控制器
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>(); // 表单Key
@@ -69,6 +75,19 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  void _login() async{
+    String account = _phoneController.text;
+    String password = _codeController.text;
+    try {
+    final userInfo = await loginAPI(account, password);
+    _usercontroller.updateUserInfo(userInfo);
+    Toastutils.show(context, "登录成功，欢迎${userInfo.nickname}！");
+    Navigator.pop(context); // 登录成功后返回上一页
+    } catch (e) {
+      Toastutils.show(context, (e as DioException).message ?? "登录失败，请稍后再试");
+    }
+  }
+
   // 登录按钮Widget
   Widget _buildLoginButton() {
     return SizedBox(
@@ -81,6 +100,8 @@ class _LoginPageState extends State<LoginPage> {
             // 勾选隐私政策和用户协议
             if (!_isChecked) {
               Toastutils.show(context, "请同意隐私条款和用户协议");
+            } else {
+              _login();
             }
           }
         },
