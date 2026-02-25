@@ -46,7 +46,7 @@ class _SuggestionState extends State<Suggestion> {
   // 左部组件
   Widget _buildLeft() {
     return Container(
-      width: 100,
+      // width: 100,
       height: 140,
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -62,28 +62,30 @@ class _SuggestionState extends State<Suggestion> {
   List<Widget> _buildRight() {
     List<GoodsItem> goodsList = _getThreeGoodsItems();
     return List.generate(goodsList.length, (index) {
-      return Column(
-        children: [
-          Image.network(goodsList[index].picture,
-          errorBuilder: (context, error, stackTrace) => Image.asset("lib/assets/home_cmd_sm.png"),
-            width: 100,
-            height: 140,
-            fit: BoxFit.cover,
-          ),
-          SizedBox(height: 5.0),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.red,
-              borderRadius: BorderRadius.circular(4.0),
+      return Expanded(
+        child:  Column(
+          children: [
+            Image.network(goodsList[index].picture,
+            errorBuilder: (context, error, stackTrace) => Image.asset("lib/assets/home_cmd_sm.png"),
+              // width: 100,
+              height: 140,
+              fit: BoxFit.cover,
             ),
-            child: Text(
-              " ¥${goodsList[index].price} ",
-              style: TextStyle(
-                color: Colors.white
+            SizedBox(height: 5.0),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(4.0),
               ),
-            ),
-          )
-        ],
+              child: Text(
+                " ¥${goodsList[index].price} ",
+                style: TextStyle(
+                  color: Colors.white
+                ),
+              ),
+            )
+          ],
+        )
       );
     });
   }
@@ -110,7 +112,9 @@ class _SuggestionState extends State<Suggestion> {
           Row(
             children: [
               _buildLeft(),
+              SizedBox(width: 10.0),
               Expanded(child: Row(
+                spacing: 10.0,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children:_buildRight()
               ))

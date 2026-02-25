@@ -38,7 +38,7 @@ class _MorelistState extends State<Morelist> {
               widget.recommendList[index].name,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(color: Colors.black, fontSize: 20),
+              style: TextStyle(color: Colors.black, fontSize: 16),
             ),
           ),
           SizedBox(height: 6),
@@ -55,22 +55,22 @@ class _MorelistState extends State<Morelist> {
                       fontSize: 20,
                       fontWeight: FontWeight.w800,
                     ),
-                    children: [
-                      TextSpan(text: " "),
-                      TextSpan(
-                        text: "${widget.recommendList[index].price}",
-                        style: TextStyle(
-                          decoration: TextDecoration.lineThrough,
-                          color: Colors.grey,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
+                    // children: [
+                    //   TextSpan(text: " "),
+                    //   TextSpan(
+                    //     text: "${widget.recommendList[index].price}",
+                    //     style: TextStyle(
+                    //       decoration: TextDecoration.lineThrough,
+                    //       color: Colors.grey,
+                    //       fontSize: 12,
+                    //     ),
+                    //   ),
+                    // ],
                   ),
                 ),
                 Text(
                   "${widget.recommendList[index].payCount}人付款",
-                  style: TextStyle(color: Colors.grey),
+                  style: TextStyle(color: Colors.grey, fontSize: 12),
                 ),
               ],
             ),

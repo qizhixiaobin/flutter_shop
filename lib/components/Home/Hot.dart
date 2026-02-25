@@ -48,28 +48,35 @@ class _HotState extends State<Hot> {
   List<Widget> _buildRight() {
     List<GoodsItem> goodsList = _getTwoGoodsItems();
     return List.generate(goodsList.length, (index) {
-      return Column(
-        children: [
-          Image.network(goodsList[index].picture,
-          errorBuilder: (context, error, stackTrace) => Image.asset("lib/assets/home_cmd_sm.png"),
-            width: 80,
-            height: 112,
+      return Expanded(
+          child: Column(
+          children: [
+            Image.network(goodsList[index].picture,
             fit: BoxFit.cover,
-          ),
-          SizedBox(height: 5.0),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.red,
-              borderRadius: BorderRadius.circular(4.0),
+            height: 100,
+            errorBuilder: (context, error, stackTrace) {
+              return Image.asset("lib/assets/home_cmd_sm.png",
+                // width: 80,
+                height: 100,
+                fit: BoxFit.cover,
+              );
+            },
             ),
-            child: Text(
-              " ¥${goodsList[index].price} ",
-              style: TextStyle(
-                color: Colors.white
+            SizedBox(height: 5.0),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(4.0),
               ),
-            ),
-          )
-        ],
+              child: Text(
+                " ¥${goodsList[index].price} ",
+                style: TextStyle(
+                  color: Colors.white
+                ),
+              ),
+            )
+          ],
+        )
       );
     });
   }
