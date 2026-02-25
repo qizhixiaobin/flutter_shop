@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/api/user.dart';
 import 'package:flutter_shop/pages/Cart/index.dart';
 import 'package:flutter_shop/pages/Category/index.dart';
 import 'package:flutter_shop/pages/Home/index.dart';
 import 'package:flutter_shop/pages/Mine/index.dart';
+import 'package:flutter_shop/stores/TokenManager.dart';
+import 'package:flutter_shop/stores/UserController.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -35,6 +40,8 @@ class _MainPageState extends State<MainPage> {
     }
   ];
 
+  final Usercontroller _usercontroller = Get.put(Usercontroller());
+
   // 根据数据生成BottomNavigationBarItem列表  
   List<BottomNavigationBarItem> _getBottomNavigationItem() {
     return List.generate(_navilist.length, (index) {
@@ -63,6 +70,21 @@ class _MainPageState extends State<MainPage> {
       MineView()
     ];
   }
+
+  _initUser() async {
+    await tokenManager.init();
+    if (tokenManager.getToken().isNotEmpty) {
+      // Token 存在，说明已登录
+      _usercontroller.updateUserInfo(await getUserProfileAPI());
+    }
+  }
+  
+  @override
+  void initState() {
+    super.initState();
+    _initUser();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

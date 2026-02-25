@@ -7,4 +7,8 @@ class Usercontroller extends GetxController {
   void updateUserInfo(UserInfo newInfo) {
     userInfo.value = newInfo;
   }
+
+  void clearUserInfo() {
+    userInfo.value = UserInfo.fromJSON({});
+  }
 }

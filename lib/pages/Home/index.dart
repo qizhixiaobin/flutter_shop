@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_shop/api/home.dart';
 import 'package:flutter_shop/components/Home/Category.dart';

@@ -4,6 +4,7 @@ class GlobalConstants {
   static final String API_BASE_URL = "https://meikou-api.itheima.net/";
   static final int TIMEOUT_DURATION = 5000; // in milliseconds  
   static final String SUCCESS_CODE = "1";
+  static final String TOKEN_KEY = "flutter_shop_token";
 }
 
 //请求地址常量
@@ -17,4 +18,5 @@ class ApiConstants {
   static const String RECOMMEND_LIST = "/home/recommend"; // 推荐列表
   static const String GUESS_LIST = "/home/goods/guessLike"  ; // 猜你喜欢列表
   static const String LOGIN = "/login"; // 登录地址
+  static const String USER_PROFILE = "/member/profile"; // 用户信息地址
 }

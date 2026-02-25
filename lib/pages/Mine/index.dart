@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_shop/api/mine.dart';
 import 'package:flutter_shop/components/Home/MoreList.dart';
 import 'package:flutter_shop/components/Mine/Guess.dart';
+import 'package:flutter_shop/stores/TokenManager.dart';
 import 'package:flutter_shop/stores/UserController.dart';
 import 'package:flutter_shop/viewmodels/home.dart';
 import 'package:get/get.dart';
@@ -15,7 +16,7 @@ class MineView extends StatefulWidget {
 
 class _MineViewState extends State<MineView> {
 
-  final Usercontroller _userController = Get.put(Usercontroller());
+  final Usercontroller _userController = Get.find();
 
   List<GoodDetailItem> _guessList = [];
   final Map<String, dynamic> _guessParams = {
@@ -41,25 +42,56 @@ class _MineViewState extends State<MineView> {
     });
   }
 
-    void _registerScrollEvent() async {
-      _scrollController.addListener(() async {
-        _getMoreGuessList();
-      });
-    }
+  Future<void> _registerScrollEvent() async {
+    _scrollController.addListener(() async {
+      _getMoreGuessList();
+    });
+  }
 
-    void _getMoreGuessList() async {
-      if (_isLoading || !_hasMore) return;
-      _isLoading = true;
-      final res = await getGuessListAPI(_guessParams);
-      _isLoading = false;
-      _guessList.addAll(res.items);
-       if (_guessParams["page"] >= res.pages) {
-        _hasMore = false;
-        return;
-      }
-      _guessParams["page"]++;
-      setState(() {});
+  Future<void> _getMoreGuessList() async {
+    if (_isLoading || !_hasMore) return;
+    _isLoading = true;
+    final res = await getGuessListAPI(_guessParams);
+    _isLoading = false;
+    _guessList.addAll(res.items);
+      if (_guessParams["page"] >= res.pages) {
+      _hasMore = false;
+      return;
     }
+    _guessParams["page"]++;
+    setState(() {});
+  }
+
+  Widget _getLogout() {
+    return Expanded(child: GestureDetector(
+      onTap: () {
+        showDialog(context: context, builder: (context){
+          return AlertDialog(
+            title: Text("确认退出登录吗？"),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context), 
+                child: Text("取消")
+              ),
+              TextButton(
+                onPressed: () {
+                  tokenManager.removeToken();
+                  _userController.clearUserInfo();
+                  Navigator.pop(context);
+                }, 
+                child: Text("确定")
+              )
+            ],
+          );
+        });
+      },
+      child: Text(
+        "退出登录", 
+        textAlign: TextAlign.end,
+        style: TextStyle(fontSize: 16, color: Colors.black)
+      ),
+    ));
+  }
 
   Widget _buildHeader() {
     return Container(
@@ -102,6 +134,7 @@ class _MineViewState extends State<MineView> {
               ],
             ),
           ),
+          Obx(() => _userController.userInfo.value.id.isNotEmpty ? _getLogout() : SizedBox()),
         ],
       ),
     );

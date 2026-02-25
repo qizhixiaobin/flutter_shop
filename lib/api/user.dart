@@ -12,3 +12,8 @@ Future<UserInfo> loginAPI(String account, String password) async {
   final response = await dioRequest.post(ApiConstants.LOGIN, data: data);
   return UserInfo.fromJSON(response);
 }
+
+Future<UserInfo> getUserProfileAPI() async {
+  final response = await dioRequest.get(ApiConstants.USER_PROFILE);
+  return UserInfo.fromJSON(response);
+}

@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shop/api/user.dart';
+import 'package:flutter_shop/stores/TokenManager.dart';
 import 'package:flutter_shop/stores/UserController.dart';
+import 'package:flutter_shop/utils/LoadingDialog.dart';
 import 'package:flutter_shop/utils/ToastUtils.dart';
 import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
@@ -15,8 +17,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final Usercontroller _usercontroller = Get.find();
-  TextEditingController _phoneController = TextEditingController(); // 账号控制器
-  TextEditingController _codeController = TextEditingController(); // 密码控制器
+  final TextEditingController _phoneController = TextEditingController(); // 账号控制器
+  final TextEditingController _codeController = TextEditingController(); // 密码控制器
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>(); // 表单Key
   // 用户账号Widget
   Widget _buildPhoneTextField() {
@@ -76,14 +78,18 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _login() async{
+    Loadingdialog.show(context, message: "努力登录中...");
     String account = _phoneController.text;
     String password = _codeController.text;
     try {
     final userInfo = await loginAPI(account, password);
     _usercontroller.updateUserInfo(userInfo);
+    tokenManager.setToken(userInfo.token);
+    Loadingdialog.hide(context);
     Toastutils.show(context, "登录成功，欢迎${userInfo.nickname}！");
     Navigator.pop(context); // 登录成功后返回上一页
     } catch (e) {
+      Loadingdialog.hide(context);
       Toastutils.show(context, (e as DioException).message ?? "登录失败，请稍后再试");
     }
   }
