@@ -85,7 +85,7 @@ class _HomeViewState extends State<HomeView> {
 
     // 获取推荐列表
   Future<void> _getRecommendList() async {
-    if (_isLoading && !_hasMore) {
+    if (_isLoading || !_hasMore) {
       return;
     }
     _isLoading = true;
@@ -97,6 +97,7 @@ class _HomeViewState extends State<HomeView> {
       return;
     }
     _page++;
+    setState(() {});
   }
 
   _registerEvent() {
